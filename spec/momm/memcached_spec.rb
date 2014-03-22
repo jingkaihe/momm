@@ -2,12 +2,9 @@ require 'spec_helper'
 
 describe Momm::Memcached do
   context 'default configurations' do
-    it 'default connection should be correct' do
-      Momm::Memcached::DEFAULT_CONNECTION.should == "localhost:11211"
-    end
 
     it 'default options should be correct' do
-      Momm::Memcached::DEFAULT_OPTIONS.should == { namespace: "momm", compress: true }
+      Momm::Memcached::DEFAULT_OPTIONS.should == { connection: "localhost:11211", namespace: "momm", compress: true }
     end
   end
 
@@ -18,7 +15,7 @@ describe Momm::Memcached do
     end
 
     it 'can be initialized' do
-      momm = Momm::Memcached.new '127.0.0.1:12345'
+      momm = Momm::Memcached.new connection: '127.0.0.1:12345'
       momm.client.should be_a(Dalli::Client)
     end
   end

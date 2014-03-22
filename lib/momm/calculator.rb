@@ -1,5 +1,3 @@
-require 'forwardable'
-
 module Momm
   class Calculator
     extend ::Forwardable
@@ -94,5 +92,11 @@ module Momm
       end
     end
 
+    def respond_to?(meth, include_private = false)
+      meth = meth.to_s
+      meth.match(/^exchange_rate_from_(\w+)_to_(\w+)/) ||
+        meth.match(/^exchange_from_(\w+)_to_(\w+)/) ||
+          super
+    end
   end
 end

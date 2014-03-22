@@ -42,14 +42,14 @@ If you want to change the storage strategies, edit it in your ~/.mom/config.yml 
 ``` ruby
   require 'momm'
 
-  momm = Momm::Client.new
-  momm.exchange_rate 'GBP', 'USD' # By default Today
-  momm.exchange_rate 'GBP', 'USD', date: Date.today
-  momm.exchange_rate_from_gbp_to_usd
+  Momm.exchange_rate 'GBP', 'USD' # By default Today
+  Momm.exchange_rate 'GBP', 'USD', date: Date.today
+  Momm.exchange_rate_from_gbp_to_usd, date: "2014-3-4"
 
-  momm.exchange 100, 'GBP', 'USD'
-  momm.exchange 100, 'GBP', 'USD', date: Date.today
-  momm.exchange_from_gbp_to_usd 100
+  Momm.exchange 100, 'GBP', 'USD'
+  Momm.exchange 100, 'GBP', 'USD', date: Date.today
+  Momm.exchange_from_gbp_to_usd 100
+  Momm.exchange_from_gbp_to_usd 100, date: "2014-3-4"
 
   # Fixnum Injection
   100.exchange from: "GBP", to "USD"

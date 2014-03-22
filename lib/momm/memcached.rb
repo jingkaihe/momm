@@ -3,18 +3,19 @@ require 'dalli'
 module Momm
   class Memcached < Storage
 
-    DEFAULT_CONNECTION = "localhost:11211"
-    DEFAULT_OPTIONS = { namespace: "momm", compress: true }
+    DEFAULT_OPTIONS = {
+      connection: "localhost:11211", namespace: "momm", compress: true
+    }.freeze
 
     attr_reader :connection, :options
 
-    def initialize(connection = DEFAULT_CONNECTION, options = DEFAULT_OPTIONS)
-      @connection = connection
+    def initialize(options = DEFAULT_OPTIONS.dup)
+      @connection = options.delete(:connection)
       @options = options
     end
 
     def client
-      @client ||= Dalli::Client.new
+      @client ||= Dalli::Client.new connection, options
     end
   end
 end

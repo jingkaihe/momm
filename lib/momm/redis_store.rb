@@ -6,8 +6,8 @@ module Momm
 
     attr_accessor :options
 
-    def initialize(options = DEFAULT_OPTIONS.dup)
-      @options = options
+    def initialize(options = {})
+      @options = options || DEFAULT_OPTIONS
     end
 
     def client
