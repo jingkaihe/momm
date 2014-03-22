@@ -4,9 +4,9 @@ Money on My Mind - An awesome gem for currency exchange.
 
 ## Requirement
 
-Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service provider. Those are for exchange rate storage, which ensure your fast query.
+Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service providers. Those are for exchange rate storage, which ensure your fast queries.
 
-You can also use local storage, however might NSFW at Cloud Platform such as Heroku.
+Local storage is not provided, because it might not safe for work on Cloud Platforms such as Heroku.
 
 ## Installation
 
@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ### Off Rails
 
-#### Command Line
+#### @TODO Command Line
 
 The storage engine by default is Redis, ensure the socket is opened.
 
@@ -51,27 +51,16 @@ If you want to change the storage strategies, edit it in your ~/.mom/config.yml 
   Momm.exchange_from_gbp_to_usd 100
   Momm.exchange_from_gbp_to_usd 100, date: "2014-3-4"
 
-  # Fixnum Injection
-  100.exchange from: "GBP", to "USD"
-  100.exchange from: :GBP, to: :USD, date: Today
-  100.exchange_from_gbp_to_usd
-
 ```
 
-##### Configuration
+#### Configuration
 
 ``` ruby
-  # Redis store
 
-  Momm.setup do
-    provider :redis
-    connection '127.0.0.1:6379'
-  end
+  Momm.store :redis_store # Use redis as the default storage
 
-  Momm.setup do
-    provider :memcached
-    connection '127.0.0.1:11211'
-  end
+  Momm.fed :ECB # Use ECB as the default currency exchange feeds
+
 ```
 
 ### Momm on Rails
