@@ -1,35 +1,37 @@
-require 'dalli'
+require 'redis'
 
 module Momm
-  class Memcached
+  class RedisStore
+    DEFAULT_OPTIONS = { host: "localhost", port: 6379, namespace: "momm"}
 
-    DEFAULT_CONNECTION = "localhost:11211"
-    DEFAULT_OPTIONS = { namespace: "momm", compress: true }
+    attr_accessor :options
 
-    attr_reader :connection, :options
-
-    # Initialise Memcached Object
+    # Initialise RedisStore Object
     #
     # == Parameters:
-    # connection::
-    #   A string represent for the port to memcached, can be socke or IP
     # options::
-    #   Configuration of the memcached connection
+    #   Configuration of the redis connection
     # == Returns
     # self
     #
-    def initialize(connection = DEFAULT_CONNECTION, options = DEFAULT_OPTIONS)
-      @connection = connection
+    def initialize(options = DEFAULT_OPTIONS.dup)
       @options = options
     end
 
-    # Lazy load the Memcached Client
+    # Lazy load the RedisStore Client
     #
     # == Returns
-    # The memcached Client
+    # the RedisStore Client
     #
     def client
-      @client ||= Dalli::Client.new
+      @client ||= begin
+        ns = options.delete(:namespace)
+
+        require 'redis/namespace'
+        native_client = Redis.new options
+
+        Redis::Namespace.new(ns, :redis => native_client)
+      end
     end
 
     # Insert the currency rate to client
@@ -48,7 +50,7 @@ module Momm
     # nil
     #
     def set_rate(date, currency, rate)
-      client.set [date, currency], rate
+      client["#{date}#{currency}"] = rate
     end
 
     # Fetch the currency rate from client
@@ -63,7 +65,7 @@ module Momm
     # the currency rate
     #
     def get_rate(date, currency)
-      client.get [date, currency]
+      client["#{date}#{currency}"].to_f
     end
 
     # Exchange Rate
