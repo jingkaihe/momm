@@ -74,7 +74,7 @@ module Momm
     #
     def get_rate(from, date = Date.today)
       res = get_rate_origin(from, date)
-      return res if res
+      return res if res != 0 && res
 
       update(feed.currency_rates)
       get_rate_origin(from, date)
