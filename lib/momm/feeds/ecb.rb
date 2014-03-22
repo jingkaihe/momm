@@ -10,7 +10,7 @@ module Momm
       #Hard coded for good
       CURRENCIES = %w{USD JPY BGN CZK DKK GBP HUF LTL PLN RON SEK CHF
         NOK HRK RUB TRY AUD BRL CAD CNY HKD IDR ILS INR KRW
-        MXN MYR NZD PHP SGD THB ZAR}.map{|code| code.downcase.to_sym }.freeze
+        MXN MYR NZD PHP SGD THB ZAR}.map(&:downcase).freeze
 
       class << self
 

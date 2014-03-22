@@ -27,17 +27,9 @@ describe Momm::Memcached do
     it 'can set and get' do
       momm = Momm::Memcached.new
 
-      momm.set_rate Date.today, :USD, 1.23
-      momm.get_rate(Date.today, :USD).should == 1.23
+      money = rand(20)
+      momm.set_rate :USD, money
+      momm.get_rate(:USD).should == money
     end
-  end
-
-  context '#exchange_rate' do
-    momm = Momm::Memcached.new
-
-    momm.set_rate Date.today, :USD, 1.23
-    momm.set_rate Date.today, :JPY, 12.4
-
-    momm.exchange_rate(:USD, :JPY).should == 12.4 / 1.23
   end
 end

@@ -26,17 +26,10 @@ describe Momm::RedisStore do
     it 'can set and get' do
       calc = Momm::Calculator.new Momm::RedisStore.new
 
-      calc.set_rate Date.today, :USD, 1.23
-      calc.get_rate(Date.today, :USD).should == 1.23
+      money = rand(20)
+
+      calc.set_rate :USD, money
+      calc.get_rate(:USD).should == money
     end
-  end
-
-  describe '#exchange_rate' do
-    calc = Momm::Calculator.new Momm::RedisStore.new
-
-    calc.set_rate Date.today, :USD, 1.23
-    calc.set_rate Date.today, :JPY, 12.4
-
-    calc.exchange_rate(:USD, :JPY).should == 12.4 / 1.23
   end
 end
