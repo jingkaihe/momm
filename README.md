@@ -2,11 +2,13 @@
 
 Money on My Mind - An awesome gem for currency exchange.
 
-## Installation
+## Requirement
 
 Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service provider. Those are for exchange rate storage, which ensure your fast query.
 
 You can also use local storage, however might NSFW at Cloud Platform such as Heroku.
+
+## Installation
 
 Add this line to your application's Gemfile:
 
