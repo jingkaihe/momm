@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "redis", ">= 3.0.6"
   spec.add_dependency "redis-namespace", ">= 1.3.2"
   spec.add_dependency "dalli", ">= 2.7.0"
-  spec.add_dependency "nokogiri", ">= 1.6.0"
+  spec.add_dependency "httparty", ">= 0.12.0"
   spec.add_dependency "json"
 
   spec.add_development_dependency "rake"

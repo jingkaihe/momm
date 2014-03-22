@@ -1,5 +1,5 @@
-require "date" # hmmm, to makes it work in the console
 require "momm/version"
+require "momm/feeds/ecb"
 require "momm/memcached"
 require "momm/redis_store"
 require "momm/calculator"
