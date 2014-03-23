@@ -6,7 +6,7 @@ require "momm/storage"
 require "momm/memcached"
 require "momm/redis_store"
 require "momm/calculator"
-
+require "momm/rails"
 module Momm
 
   class << self

@@ -25,11 +25,13 @@ Money on My Mind - An awesome gem for currency exchange.
 
 ## Requirement
 
+
 Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service providers. Those are for exchange rate storage, which ensure your fast queries.
 
 Local storage is not provided, because it might not safe for work on Cloud Platforms such as Heroku.
 
 ## Installation
+
 
 Add this line to your application's Gemfile:
 
@@ -45,20 +47,22 @@ Or install it yourself as:
 
 ## Usage
 
+
 ### Off Rails
+
 
 #### Command Line Tool
 
-The storage engine by default is Memcached, ensure the socket is opened.
+
+After the gem is installed, momm provide you a command line tool. The storage engine by default is Memcached, ensure it is opened.
 
 ```
   $ momm rate GBP CNY                  # Exchange rate by default is today.
   $ momm exchange 100 GBP USD 2014-3-1 # Exchange rate at 2013-3-1
 ```
 
-If you want to change the storage strategies, edit it in your ~/.mom/config.yml file.
-
 #### Ruby
+
 
 ``` ruby
   require 'momm'
@@ -71,20 +75,19 @@ If you want to change the storage strategies, edit it in your ~/.mom/config.yml 
   Momm.exchange 100, 'GBP', 'USD', date: Date.today
   Momm.exchange_from_gbp_to_usd 100
   Momm.exchange_from_gbp_to_usd 100, date: "2014-3-4"
-
 ```
 
 #### Configuration
 
-``` ruby
 
+``` ruby
   Momm.store :redis_store # Use redis as the default storage
 
   Momm.fed :ECB # Use ECB as the default currency exchange feeds
-
 ```
 
 ### Momm on Rails
+
 
 Web service is provided by Momm on Rails, however you need to install sinatra simply by adding ```gem 'sinatra'``` into your Gemfile. Then require ```momm/web``` module and edit your routes like:
 
@@ -98,7 +101,7 @@ Web service is provided by Momm on Rails, however you need to install sinatra si
   end
 ```
 
-The default Storage is Memcached, if you want to switch to Redis, you can create an intialzier like:
+The default Storage is Memcached, if you want to switch to Redis, you can create an initialzer like:
 
 ``` ruby
 
@@ -107,7 +110,51 @@ The default Storage is Memcached, if you want to switch to Redis, you can create
   Momm.source :ECB
 ```
 
-### @TODO: A small widget
+After boot your rails application, you can visit '/momm'. A mounted app has already been in place.
+
+
+#### Small widget(You can insert it anywhere in your HTML files)
+
+After mounted the engine to Rails, without configuration, you can simply copy & paste the widget code to your HTML files.
+
+```echo '//= require money-on-my-mind' >> app/assets/javascripts/application.js ``` to insert home made js to your assets.
+
+No stylesheets included, so it might look sucks a bit. Feel free to add your own css.
+
+Widget of [SLIM](http://slim-lang.com/) template looks like below. Currenly only safe for work for Rails templates.
+
+``` ruby
+  .momm data-url="/momm/query"
+    p
+      | Date:
+      input.mom-ele.momm-date type="text" /
+    p
+      | How much:
+      input.mom-ele.momm-money type="text" value="1" /
+    p
+      | From:
+      select.mom-ele.momm-from
+        = options_for_select(Momm.currencies)
+    p
+      | To:
+      select.mom-ele.momm-to
+        = options_for_select(Momm.currencies)
+    p
+      | Exchange:
+      span.momm-exchange
+```
+
+
+## Hate Rails? How about a Rack app? (Sigh)
+
+``` ruby
+  # config.ru
+
+  require 'momm/web'
+  run Momm::Web
+```
+
+Just rack it up!
 
 ## Contributing
 

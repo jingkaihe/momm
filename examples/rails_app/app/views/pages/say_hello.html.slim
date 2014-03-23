@@ -1,0 +1,20 @@
+h1 Say Hey!
+
+.momm data-url="/momm/query"
+  p
+    | Date:
+    input.mom-ele.momm-date type="text" /
+  p
+    | How much:
+    input.mom-ele.momm-money type="text" value="1" /
+  p
+    | From:
+    select.mom-ele.momm-from
+      = options_for_select(Momm.currencies)
+  p
+    | To:
+    select.mom-ele.momm-to
+      = options_for_select(Momm.currencies)
+  p
+    | Exchange:
+    span.momm-exchange
