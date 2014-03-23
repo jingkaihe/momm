@@ -1,0 +1,24 @@
+<div class="momm" data-url="<%= root_path %>/query" >
+  <p>Date: <input type="text" class="mom-ele momm-date" /></p>
+
+  <p>How much: <input type="text" class="mom-ele momm-money" value="1" /></p>
+
+  <p>
+    From:
+    <select class="mom-ele momm-from">
+      <% @currencies.each do |currency| %>
+        <option value="<%= currency %>"><%= currency %></option>
+      <% end %>
+    </select>
+  </p>
+
+  <p>
+    To:
+    <select class="mom-ele momm-to">
+      <% @currencies.each do |currency| %>
+        <option value="<%= currency %>"><%= currency %></option>
+      <% end %>
+    </select>
+  </p>
+
+  <p>Exchange: <span class="momm-exchange"></span></p>

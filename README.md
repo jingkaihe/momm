@@ -49,7 +49,7 @@ Or install it yourself as:
 
 #### Command Line Tool
 
-The storage engine by default is Redis, ensure the socket is opened.
+The storage engine by default is Memcached, ensure the socket is opened.
 
 ```
   $ momm rate GBP CNY                  # Exchange rate by default is today.

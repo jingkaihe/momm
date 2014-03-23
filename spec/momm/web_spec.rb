@@ -10,7 +10,14 @@ describe Momm::Web do
     Momm::Web
   end
 
-  describe '/query' do
+  describe 'GET /' do
+    it 'should response' do
+      get '/'
+      expect(last_response).to be_ok
+    end
+  end
+
+  describe 'GET /query' do
     it 'should response' do
       get '/query', money: 12, from: "GBP", to: "USD", date: "2014-3-10"
 
@@ -19,7 +26,7 @@ describe Momm::Web do
     end
   end
 
-  describe '/currencies' do
+  describe 'GET /currencies' do
     it 'should response' do
       get '/currencies'
 
