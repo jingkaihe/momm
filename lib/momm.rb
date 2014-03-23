@@ -54,17 +54,14 @@ module Momm
     # delegate the exchange, :currencies, exchange_rate,
     # as well as meta programmed methods to module level
     delegate [:currencies, :exchange, :exchange_rate,
-        :method_missing, :respond_to?] => :calculator
+        :method_missing, :respond_to?, :update! ] => :calculator
 
     private
 
     # Delegate the calculator
     def calculator
-      @calculator ||= if storage || feed
-        Calculator.new storage, feed
-      else
-        Calculator.new
-      end
+      @calculator = Calculator.new(
+        (storage || Memcached.new), (feed || Feeds::ECB.instance))
     end
   end
 

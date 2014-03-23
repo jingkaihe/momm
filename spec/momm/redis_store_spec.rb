@@ -30,6 +30,8 @@ describe Momm::RedisStore do
 
       calc.set_rate :USD, money
       calc.get_rate(:USD).should == money
+
+      Momm.update!
     end
   end
 end

@@ -9,10 +9,6 @@ describe Momm::Calculator do
       calc.should respond_to :client
     end
 
-    it 'should response to update' do
-      calc.should respond_to :update
-    end
-
     it 'should response to set_rate' do
       calc.should respond_to :set_rate
     end
@@ -41,8 +37,8 @@ describe Momm::Calculator do
       calc.should respond_to :client
     end
 
-    it 'should response to update' do
-      calc.should respond_to :update
+    it 'should response to update!' do
+      calc.should respond_to :update!
     end
 
     it 'should response to set_rate' do

@@ -54,13 +54,13 @@ module Momm
     #   An array looks like [{date: Date.now, currency: :CNY, rate: 1.23} ...]
     #
     # == Returns
-    # nil
+    # "OK"
     #
     def update(data)
       data.each do |d|
         set_rate d[:currency], d[:rate], d[:date]
       end
-      nil
+      "OK"
     end
 
     NotImplementedError = Class.new(StandardError)

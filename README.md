@@ -59,6 +59,7 @@ After the gem is installed, momm provide you a command line tool. The storage en
 ```
   $ momm rate GBP CNY                  # Exchange rate by default is today.
   $ momm exchange 100 GBP USD 2014-3-1 # Exchange rate at 2013-3-1
+  $ momm update                        # Fetch feeds from remote and update the storage
 ```
 
 #### Ruby
@@ -75,6 +76,8 @@ After the gem is installed, momm provide you a command line tool. The storage en
   Momm.exchange 100, 'GBP', 'USD', date: Date.today
   Momm.exchange_from_gbp_to_usd 100
   Momm.exchange_from_gbp_to_usd 100, date: "2014-3-4"
+
+  Momm.update! # Fetching the feeds from remote. Only do that if you find any abnormal.
 ```
 
 #### Configuration

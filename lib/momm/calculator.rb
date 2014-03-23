@@ -16,14 +16,25 @@ module Momm
 
     attr_reader :storage, :feed
 
-    # delegate the client and update method from storage
-    delegate [:client, :update, :set_rate] => :storage
+    # delegate the client and set_rate method from storage
+    delegate [:client, :set_rate] => :storage
 
     # delegate the currencies method from feed
     delegate :currencies => :feed
 
-    # delegate the get rate method with a different naming
+    # delegate methods with different naming for overriding
     def_delegator :storage, :get_rate, :get_rate_origin
+    def_delegator :storage, :update, :origin_update
+
+
+    # Update the feeds. In most case, you do not need to call this,
+    # because Momm will update the feeds everytime she find something missing ;)
+    # == Returns
+    # nil
+    #
+    def update!
+      origin_update(feed.currency_rates)
+    end
 
     # Exchange Rate
     #
@@ -101,7 +112,7 @@ module Momm
       res = get_rate_origin(from, date)
       return res if res != 0 && res
 
-      update(feed.currency_rates)
+      update!
       get_rate_origin(from, date)
     end
 

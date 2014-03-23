@@ -27,6 +27,8 @@ describe Momm::Memcached do
       money = rand(20)
       momm.set_rate :USD, money
       momm.get_rate(:USD).should == money
+
+      Momm.update!
     end
   end
 end

@@ -4,7 +4,7 @@ $LOAD_PATH << File.dirname(__FILE__) + "/../lib" if $0 == __FILE__
 require 'optparse'
 require 'momm'
 
-OPERATIONS = %w{rate exchange}
+OPERATIONS = %w{rate exchange update}
 
 option_parser = OptionParser.new do |opts|
   opts.banner = Momm::BANNER
@@ -15,7 +15,7 @@ Supported commands:
 
  rate [country_code] [country_code] [YYYY-MM-DD]                   Display rate!
  exchange [money] [country_code] [country_code] [YYYY-MM-DD]       Exchange for you!
-
+ update                                                            Fetch feeds from Remote!
 Examples:
  momm exchange 20 GBP CNY      Convert the between currencies
  momm rate GBP CNY             Simply display the rate
@@ -57,6 +57,8 @@ if OPERATIONS.include?(op)
       end
 
       puts Momm.exchange money, from, to, date: date
+    when "update"
+      puts Momm.update!
     end
 
   rescue ArgumentError => ex

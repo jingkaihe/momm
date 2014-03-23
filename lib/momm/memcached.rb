@@ -11,8 +11,8 @@ module Momm
 
     def initialize(options={})
       _options = DEFAULT_OPTIONS.dup.merge options
-      @connection = options.delete(:connection)
-      @options = options
+      @connection = _options.delete(:connection)
+      @options = _options
     end
 
     def client
