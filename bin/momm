@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.dirname(__FILE__) + "/../lib" if $0 == __FILE__
+
+require 'optparse'
+require 'momm'
+
+OPERATIONS = %w{rate exchange}
+
+option_parser = OptionParser.new do |opts|
+  opts.banner = Momm::BANNER
+
+  opts.separator <<-EOS
+
+Supported commands:
+
+ rate [country_code] [country_code] [YYYY-MM-DD]                   Display rate!
+ exchange [money] [country_code] [country_code] [YYYY-MM-DD]       Exchange for you!
+
+Examples:
+ mmom exchange 20 GBP CNY      Convert the between currencies
+ mmom rate GBP CNY             Simply display the rate
+
+Support Code:
+
+#{Momm.currencies.join(" ")}
+
+To be honest I don't know most of them...
+
+EOS
+end
+
+option_parser.parse!
+
+
+op = ARGV.shift
+if OPERATIONS.include?(op)
+  begin
+    case op
+    when "rate"
+      from = ARGV[0].to_sym
+      to = ARGV[1].to_sym
+      date = if ARGV[2]
+        Date.parse(ARGV[2])
+      else
+        Date.today
+      end
+
+      puts Momm.exchange_rate from, to, date: date
+    when "exchange"
+      money = ARGV[0].to_f
+      from = ARGV[1].to_sym
+      to = ARGV[2].to_sym
+      date = if ARGV[3]
+        Date.parse(ARGV[3])
+      else
+        Date.today
+      end
+
+      puts Momm.exchange money, from, to, date: date
+    end
+
+  rescue ArgumentError => ex
+    puts ex.message
+
+  rescue Exception => e
+    puts "Mmmmm, I didn't expect this:"
+    puts e.message
+    puts e.backtrace.join("\n")
+  end
+else
+  puts option_parser.help
+end

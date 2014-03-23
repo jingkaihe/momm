@@ -2,6 +2,27 @@
 
 Money on My Mind - An awesome gem for currency exchange.
 
+```
+                         __  __                                        __  __
+                        |  \/  |                                      |  \/  |
+                        | \  / | ___  _ __   ___ _   _    ___  _ __   | \  / |_   _
+                        | |\/| |/ _ \| '_ \ / _ \ | | |  / _ \| '_ \  | |\/| | | | |
+                        | |  | | (_) | | | |  __/ |_| | | (_) | | | | | |  | | |_| |
+                        |_|  |_|\___/|_| |_|\___|\__, |  \___/|_| |_| |_|  |_|\__, |
+                                                  __/ |                        __/ |
+                                                 |___/                        |___/
+                                             __  __ _           _
+                                            |  \/  (_)         | |
+                                            | \  / |_ _ __   __| |
+                                            | |\/| | | '_ \ / _` |
+                                            | |  | | | | | | (_| |
+                                            |_|  |_|_|_| |_|\__,_|
+
+
+                                    Keep calm bro. We'll calculate rate for you.
+
+```
+
 ## Requirement
 
 Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service providers. Those are for exchange rate storage, which ensure your fast queries.
@@ -26,13 +47,13 @@ Or install it yourself as:
 
 ### Off Rails
 
-#### @TODO Command Line
+#### Command Line Tool
 
 The storage engine by default is Redis, ensure the socket is opened.
 
 ```
-  $ momm 100 GBP to USD # Exchange rate by default is today.
-  $ momm 100 GBP to USD 2014-3-1 # Exchange rate at 2013-3-1
+  $ momm rate GBP CNY                  # Exchange rate by default is today.
+  $ momm exchange 100 GBP USD 2014-3-1 # Exchange rate at 2013-3-1
 ```
 
 If you want to change the storage strategies, edit it in your ~/.mom/config.yml file.
@@ -65,11 +86,32 @@ If you want to change the storage strategies, edit it in your ~/.mom/config.yml 
 
 ### Momm on Rails
 
-# @TODO
+Web service is provided by Momm on Rails, however you need to install sinatra simply by adding ```gem 'sinatra'``` into your Gemfile. Then require ```momm/web``` module and edit your routes like:
+
+``` ruby
+  # routes.rb
+
+  require 'momm/web'
+
+  Myapp::Application.routes.draw do
+    mount Momm::Web => '/momm'
+  end
+```
+
+The default Storage is Memcached, if you want to switch to Redis, you can create an intialzier like:
+
+``` ruby
+
+  # momm_initialzer.rb
+  Momm.store :redis_store, host: "127.0.0.1"
+  Momm.source :ECB
+```
+
+### @TODO: A small widget
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/momm/fork )
+1. Fork it ( https://github.com/jaxi/momm/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
