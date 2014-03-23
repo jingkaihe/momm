@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jaxihe@gmail.com"]
   spec.summary       = %q{A Currency Exchange Calculator}
   spec.description   = %q{A Currency Exchange Calculator}
-  spec.homepage      = "https://github.com:jaxi/momm"
+  spec.homepage      = "https://github.com/jaxi/momm"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
