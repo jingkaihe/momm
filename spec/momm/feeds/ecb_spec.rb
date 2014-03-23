@@ -17,7 +17,7 @@ describe Momm::Feeds::ECB do
 
   describe ".currencies" do
     it 'should not be nil' do
-      Momm::Feeds::ECB.currencies.should be_a(Array)
+      Momm::Feeds::ECB.instance.currencies.should be_a(Array)
     end
   end
 

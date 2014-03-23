@@ -16,8 +16,13 @@ module Momm
 
     attr_reader :storage, :feed
 
-    # Delegate the client and update method from storage
+    # delegate the client and update method from storage
     delegate [:client, :update, :set_rate] => :storage
+
+    # delegate the currencies method from feed
+    delegate :currencies => :feed
+
+    # delegate the get rate method with a different naming
     def_delegator :storage, :get_rate, :get_rate_origin
 
     # Exchange Rate
@@ -35,7 +40,29 @@ module Momm
     #
     def exchange_rate(from, to, options = {})
       date = options[:date] || Date.today
-      get_rate(to, date) / get_rate(from, date)
+      date = Date.parse(date) if date.is_a? String
+
+      max_count = 10
+      date_counter = date
+
+      # @TODO Refactoring.
+      # It seems that currency does not have feeds at weekends, so
+      # we simply find the closest day which has currency feeds.
+      while max_count > 0
+        to_rate = get_rate(to, date_counter)
+        from_rate = get_rate(from, date_counter)
+
+        date_counter -=1
+        max_count -= 1
+        next if to_rate == 0 || from_rate == 0
+
+        set_rate(to, to_rate, date)
+        set_rate(from, from_rate, date)
+
+        return (to_rate / from_rate).round(2)
+      end
+
+      0.0 / 0
     end
 
     # Exchange Money from one currency to another
@@ -54,7 +81,7 @@ module Momm
     # money exchanged
     #
     def exchange(money, from, to, options= {})
-      date = options[:date] || Date.today
+      options[:date] ||= Date.today
       (money * exchange_rate(from, to, options)).round(2)
     end
 

@@ -9,7 +9,7 @@ module Momm
       money = params[:money].to_f
       from = params[:from].to_sym
       to = params[:to].to_sym
-      date = params[:date]
+      date = params[:date] || Date.today
 
 
       if money && from && to && date
@@ -18,6 +18,11 @@ module Momm
         "N/A"
       end
 
+    end
+
+    get '/currencies' do
+      content_type :json
+      Momm.currencies.to_json
     end
   end
 end

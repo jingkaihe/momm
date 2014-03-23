@@ -9,7 +9,8 @@ module Momm
 
     attr_reader :connection, :options
 
-    def initialize(options = DEFAULT_OPTIONS.dup)
+    def initialize(options={})
+      _options = DEFAULT_OPTIONS.dup.merge options
       @connection = options.delete(:connection)
       @options = options
     end

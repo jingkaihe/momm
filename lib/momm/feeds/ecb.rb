@@ -10,7 +10,7 @@ module Momm
       #Hard coded for good
       CURRENCIES = %w{USD JPY BGN CZK DKK GBP HUF LTL PLN RON SEK CHF
         NOK HRK RUB TRY AUD BRL CAD CNY HKD IDR ILS INR KRW
-        MXN MYR NZD PHP SGD THB ZAR}.map(&:downcase).freeze
+        MXN MYR NZD PHP SGD THB ZAR}.freeze
 
       class << self
 
@@ -21,10 +21,6 @@ module Momm
         #
         def instance
           @instance ||= self.send :new
-        end
-
-        def currencies
-          CURRENCIES
         end
       end
 
@@ -61,6 +57,10 @@ module Momm
 
       def fetching_url
         FETCHING_URL
+      end
+
+      def currencies
+        CURRENCIES
       end
     end
   end

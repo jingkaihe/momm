@@ -64,6 +64,10 @@ describe Momm::Calculator do
     it 'should response to exchange' do
       calc.should respond_to :exchange
     end
+
+    it 'should response to currencies' do
+      calc.should respond_to :currencies
+    end
   end
 
   context 'feeds' do

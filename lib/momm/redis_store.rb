@@ -7,7 +7,7 @@ module Momm
     attr_accessor :options
 
     def initialize(options = {})
-      @options = options || DEFAULT_OPTIONS
+      @options = DEFAULT_OPTIONS.dup.merge options
     end
 
     def client

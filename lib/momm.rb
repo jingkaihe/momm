@@ -12,10 +12,6 @@ module Momm
   class << self
     extend ::Forwardable
 
-    def setup(&block)
-      yield if block_given?
-    end
-
     # Inject the storage into class variable
     #
     # == Parameters
@@ -28,12 +24,12 @@ module Momm
     # == Examples
     # store :redis_store, port: 12345
     #
-    def store(storage_name, kv={})
+    def store(storage_name, **kv)
       @storage = begin
         name = storage_name.to_s.split('_').map(&:capitalize).join
         klass = Kernel.const_get("Momm::#{name}")
 
-        kv == {} ? klass.new : klass.new(kv)
+        klass.new **kv
       end
     end
 
@@ -50,19 +46,21 @@ module Momm
     # source :ECB (which is by default)
     #
     def source(feed_name)
-      @feed = Kernel.const_get("Momm::Feeds::#{feed_name}")
+      @feed = Kernel.const_get("Momm::Feeds::#{feed_name}").instance
     end
 
     attr_reader :storage, :feed
 
-    # delegate the exchange, exchange_rate, as well as meta programmed methods to module level
-    delegate [:exchange, :exchange_rate, :method_missing, :respond_to?] => :calculator
+    # delegate the exchange, :currencies, exchange_rate,
+    # as well as meta programmed methods to module level
+    delegate [:currencies, :exchange, :exchange_rate,
+        :method_missing, :respond_to?] => :calculator
 
     private
 
     # Delegate the calculator
     def calculator
-      @calculator ||= if storage && feed
+      @calculator ||= if storage || feed
         Calculator.new storage, feed
       else
         Calculator.new
