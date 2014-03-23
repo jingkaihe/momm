@@ -156,6 +156,12 @@ Widget of [SLIM](http://slim-lang.com/) template looks like below. Currenly only
 
 Just rack it up!
 
+## How to Test
+
+``` bash
+  $ rake rspec
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/jaxi/momm/fork )

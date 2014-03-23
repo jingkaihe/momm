@@ -17,8 +17,8 @@ Supported commands:
  exchange [money] [country_code] [country_code] [YYYY-MM-DD]       Exchange for you!
 
 Examples:
- mmom exchange 20 GBP CNY      Convert the between currencies
- mmom rate GBP CNY             Simply display the rate
+ momm exchange 20 GBP CNY      Convert the between currencies
+ momm rate GBP CNY             Simply display the rate
 
 Support Code:
 
