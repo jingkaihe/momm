@@ -50,6 +50,11 @@ module Momm
     # the exchange rate
     #
     def exchange_rate(from, to, options = {})
+      origin_exchange_rate(from, to, options = {}).round(2)
+    end
+
+    # Exchange Rate without precision bound
+    def origin_exchange_rate(from, to, options = {})
       date = options[:date] || Date.today
       date = Date.parse(date) if date.is_a? String
 
@@ -70,11 +75,13 @@ module Momm
         set_rate(to, to_rate, date)
         set_rate(from, from_rate, date)
 
-        return (to_rate / from_rate).round(2)
+        return (to_rate / from_rate)
       end
 
       0.0 / 0
     end
+
+    private :origin_exchange_rate
 
     # Exchange Money from one currency to another
     #
@@ -93,7 +100,7 @@ module Momm
     #
     def exchange(money, from, to, options= {})
       options[:date] ||= Date.today
-      (money * exchange_rate(from, to, options)).round(2)
+      (origin_exchange_rate(from, to, options) * money).round(2)
     end
 
     # Delegate the get_rate method, if the target is missing

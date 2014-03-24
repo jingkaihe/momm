@@ -22,7 +22,7 @@ describe Momm::Web do
       get '/query', money: 12, from: "GBP", to: "USD", date: "2014-3-10"
 
       expect(last_response).to be_ok
-      expect(last_response.body).to eq("19.92")
+      expect(last_response.body).to eq("19.98")
     end
   end
 
