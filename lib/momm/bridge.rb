@@ -17,12 +17,12 @@ module Momm
     # == Examples
     # store :redis_store, port: 12345
     #
-    def store(storage_name, **kv)
+    def store(storage_name, kv={})
       @storage = begin
         name = storage_name.to_s.split('_').map(&:capitalize).join
-        klass = Kernel.const_get("Momm::#{name}")
+        klass = instance_eval "Momm::#{name}"
 
-        klass.new **kv
+        klass.new kv
       end
     end
 
@@ -39,7 +39,7 @@ module Momm
     # source :ECB (which is by default)
     #
     def source(feed_name)
-      @feed = Kernel.const_get("Momm::Feeds::#{feed_name}").instance
+      @feed = instance_eval("Momm::Feeds::#{feed_name}").instance
     end
 
     attr_reader :storage, :feed
