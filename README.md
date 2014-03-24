@@ -1,5 +1,7 @@
 # Momm
 
+[![Build Status](https://travis-ci.org/jaxi/momm.svg?branch=master)](https://travis-ci.org/jaxi/momm)
+
 Money on My Mind - An awesome gem for currency exchange.
 
 ```
