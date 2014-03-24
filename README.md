@@ -87,6 +87,12 @@ After the gem is installed, momm provide you a command line tool. The storage en
   Momm.store :redis_store # Use redis as the default storage
 
   Momm.fed :ECB # Use ECB as the default currency exchange feeds
+
+  # Favoured way of configuration
+  Momm.setup do
+    store :redis_store, host: "127.0.0.1", namespace: "green_tea"
+  end
+
 ```
 
 ### Momm on Rails
@@ -109,8 +115,9 @@ The default Storage is Memcached, if you want to switch to Redis, you can create
 ``` ruby
 
   # momm_initialzer.rb
-  Momm.store :redis_store, host: "127.0.0.1"
-  Momm.source :ECB
+  Momm.setup do
+    store :redis_store, host: "127.0.0.1", namespace: "green_tea"
+  end
 ```
 
 After boot your rails application, you can visit '/momm'. A mounted app has already been in place.

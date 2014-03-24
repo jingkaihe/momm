@@ -6,62 +6,41 @@ require "momm/storage"
 require "momm/memcached"
 require "momm/redis_store"
 require "momm/calculator"
+require "momm/bridge"
 require "momm/rails"
 module Momm
 
   class << self
     extend ::Forwardable
 
-    # Inject the storage into class variable
+    # Default options setup
     #
-    # == Parameters
-    # storage_name::
-    # :redis_store or memcached. Memcached is set as default.
+    # == Example
+    # Momm.setup do
+    #   store :redis_store, host: "127.0.0.1"
+    # end
     #
-    # == Returns
-    # the picked storage
-    #
-    # == Examples
-    # store :redis_store, port: 12345
-    #
-    def store(storage_name, **kv)
-      @storage = begin
-        name = storage_name.to_s.split('_').map(&:capitalize).join
-        klass = Kernel.const_get("Momm::#{name}")
-
-        klass.new **kv
-      end
+    def setup(&block)
+      bridge.instance_eval(&block)
     end
-
-    # Inject the storage into class variable
-    #
-    # == Parameters
-    # feed_name::
-    # currently only support ECB
-    #
-    # == Returns
-    # the picked feed
-    #
-    # == Examples
-    # source :ECB (which is by default)
-    #
-    def source(feed_name)
-      @feed = Kernel.const_get("Momm::Feeds::#{feed_name}").instance
-    end
-
-    attr_reader :storage, :feed
 
     # delegate the exchange, :currencies, exchange_rate,
     # as well as meta programmed methods to module level
     delegate [:currencies, :exchange, :exchange_rate,
         :method_missing, :respond_to?, :update! ] => :calculator
 
+    delegate [:store, :source ] => :bridge
+
     private
 
     # Delegate the calculator
     def calculator
-      @calculator = Calculator.new(
-        (storage || Memcached.new), (feed || Feeds::ECB.instance))
+      @calculator = Calculator.new bridge.storage, bridge.feed
+    end
+
+    # Delegate the bridge
+    def bridge
+      @bridge ||= Bridge.new
     end
   end
 
