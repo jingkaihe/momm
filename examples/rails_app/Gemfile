@@ -4,6 +4,10 @@ gem 'rails', '4.0.4'
 
 gem 'jquery-rails'
 
+# Redis Store dependency
+gem 'redis'
+gem 'redis-namespace'
+
 gem 'momm', path: '../..'
 
 gem 'slim-rails'

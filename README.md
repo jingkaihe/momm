@@ -86,7 +86,7 @@ After the gem is installed, momm provide you a command line tool. The storage en
 
 
 ``` ruby
-  Momm.store :redis_store # Use redis as the default storage
+  Momm.store :redis_store # Use redis as the default storage. Ensure 'redis' & 'redis-namespace is installed'
 
   Momm.fed :ECB # Use ECB as the default currency exchange feeds
 
@@ -115,8 +115,12 @@ Web service is provided by Momm on Rails, however you need to install sinatra si
 The default Storage is Memcached, if you want to switch to Redis, you can create an initialzer like:
 
 ``` ruby
+  # Gemfile
+  gem 'redis'
+  gem 'redis-namespace'
 
   # momm_initialzer.rb
+
   Momm.setup do
     store :redis_store, host: "127.0.0.1", namespace: "green_tea"
   end

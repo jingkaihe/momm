@@ -20,5 +20,15 @@ module Momm
         Redis::Namespace.new(ns, :redis => native_client)
       end
     end
+
+    def set_rate(currency, rate, date = Date.today)
+      date = Date.parse(date) if date.is_a? String
+      client.set "#{date}#{currency}", rate
+    end
+
+    def get_rate(currency, date = Date.today)
+      date = Date.parse(date) if date.is_a? String
+      client.get("#{date}#{currency}").to_f
+    end
   end
 end

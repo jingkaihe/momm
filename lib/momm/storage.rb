@@ -27,8 +27,7 @@ module Momm
     # nil
     #
     def set_rate(currency, rate, date = Date.today)
-      date = Date.parse(date) if date.is_a? String
-      client.set "#{date}#{currency}", rate
+      raise NotImplementedError
     end
 
     # Fetch the currency rate from client
@@ -43,8 +42,7 @@ module Momm
     # the currency rate
     #
     def get_rate(currency, date = Date.today)
-      date = Date.parse(date) if date.is_a? String
-      client.get("#{date}#{currency}").to_f
+      raise NotImplementedError
     end
 
     # update the data to storage
