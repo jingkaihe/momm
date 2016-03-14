@@ -1,5 +1,3 @@
-require 'redis'
-
 module Momm
   class RedisStore < Storage
     DEFAULT_OPTIONS = { host: "localhost", port: 6379, namespace: "momm"}
@@ -30,5 +28,5 @@ module Momm
       date = Date.parse(date) if date.is_a? String
       client.get("#{date}#{currency}").to_f
     end
-  end
+  end if defined?(::Redis)
 end

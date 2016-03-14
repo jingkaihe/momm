@@ -28,9 +28,7 @@ Money on My Mind - An awesome gem for currency exchange.
 ## Requirement
 
 
-Ensure that [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on your local machine or server or provided by some other cloud service providers. Those are for exchange rate storage, which ensure your fast queries.
-
-Local storage is not provided, because it might not safe for work on Cloud Platforms such as Heroku.
+Ensure that either [Memcached](http://memcached.org/) or [Redis](http://redis.io/) is installed on the machines/servers for exchange rate store
 
 ## Installation
 
@@ -56,7 +54,7 @@ Or install it yourself as:
 #### Command Line Tool
 
 
-After the gem is installed, momm provide you a command line tool. The storage engine by default is Memcached, ensure it is opened.
+After the gem is installed, momm provide you a command line tool. The storage engine by default is Memcached. Make sure that its running in the background. Also make sure that you got the `dalli` gem installed
 
 ```
   $ momm rate GBP CNY                  # Exchange rate by default is today.
@@ -68,6 +66,7 @@ After the gem is installed, momm provide you a command line tool. The storage en
 
 
 ``` ruby
+  require 'dalli' # Make sure that dalli is required before momm
   require 'momm'
 
   Momm.exchange_rate 'GBP', 'USD' # By default Today
@@ -104,7 +103,7 @@ Web service is provided by Momm on Rails, however you need to install sinatra si
 
 ``` ruby
   # routes.rb
-
+  require 'dalli'
   require 'momm/web'
 
   Myapp::Application.routes.draw do
@@ -112,7 +111,7 @@ Web service is provided by Momm on Rails, however you need to install sinatra si
   end
 ```
 
-The default Storage is Memcached, if you want to switch to Redis, you can create an initialzer like:
+If you want to switch to Redis, you can create an initialzer like:
 
 ``` ruby
   # Gemfile
@@ -165,7 +164,7 @@ Widget of [SLIM](http://slim-lang.com/) template looks like below. Currenly only
 
 ``` ruby
   # config.ru
-
+  require 'dalli' # again make sure that dalli is required beforehand!!!
   require 'momm/web'
   run Momm::Web
 ```

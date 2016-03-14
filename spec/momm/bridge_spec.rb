@@ -5,8 +5,8 @@ describe Momm::Bridge do
     it 'should have default' do
       bridge = Momm::Bridge.new
 
-      bridge.storage.should be_a(Momm::Memcached)
-      bridge.feed.should be_a(Momm::Feeds::ECB)
+      expect(bridge.storage).to be_a(Momm::Memcached)
+      expect(bridge.feed).to be_a(Momm::Feeds::ECB)
     end
   end
 
@@ -15,12 +15,12 @@ describe Momm::Bridge do
 
     it 'should change the storage' do
       bridge.store :redis_store
-      bridge.storage.should be_a(Momm::RedisStore)
+      expect(bridge.storage).to be_a(Momm::RedisStore)
     end
 
     it 'should change the ECB' do
       bridge.source :ECB
-      bridge.feed.should be_a(Momm::Feeds::ECB)
+      expect(bridge.feed).to be_a(Momm::Feeds::ECB)
     end
   end
 end

@@ -2,6 +2,8 @@
 $LOAD_PATH << File.dirname(__FILE__) + "/../lib" if $0 == __FILE__
 
 require 'optparse'
+
+require 'dalli'
 require 'momm'
 
 OPERATIONS = %w{rate exchange update}

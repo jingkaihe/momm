@@ -6,27 +6,27 @@ describe Momm::Calculator do
     let(:calc) { calc = Momm::Calculator.new Momm::RedisStore.new }
 
     it 'should response to client' do
-      calc.should respond_to :client
+      expect(calc).to respond_to :client
     end
 
     it 'should response to set_rate' do
-      calc.should respond_to :set_rate
+      expect(calc).to respond_to :set_rate
     end
 
     it 'should response to get_rate_origin' do
-      calc.should respond_to :get_rate_origin
+      expect(calc).to respond_to :get_rate_origin
     end
 
     it 'should response to get_rate' do
-      calc.should respond_to :get_rate
+      expect(calc).to respond_to :get_rate
     end
 
     it 'should response to exchange_rate' do
-      calc.should respond_to :exchange_rate
+      expect(calc).to respond_to :exchange_rate
     end
 
     it 'should response to exchange' do
-      calc.should respond_to :exchange
+      expect(calc).to respond_to :exchange
     end
   end
 
@@ -34,42 +34,42 @@ describe Momm::Calculator do
     let(:calc) { Momm::Calculator.new }
 
     it 'should response to client' do
-      calc.should respond_to :client
+      expect(calc).to respond_to :client
     end
 
     it 'should response to update!' do
-      calc.should respond_to :update!
+      expect(calc).to respond_to :update!
     end
 
     it 'should response to set_rate' do
-      calc.should respond_to :set_rate
+      expect(calc).to respond_to :set_rate
     end
 
     it 'should response to get_rate_origin' do
-      calc.should respond_to :get_rate_origin
+      expect(calc).to respond_to :get_rate_origin
     end
 
     it 'should response to get_rate' do
-      calc.should respond_to :get_rate
+      expect(calc).to respond_to :get_rate
     end
 
     it 'should response to exchange_rate' do
-      calc.should respond_to :exchange_rate
+      expect(calc).to respond_to :exchange_rate
     end
 
     it 'should response to exchange' do
-      calc.should respond_to :exchange
+      expect(calc).to respond_to :exchange
     end
 
     it 'should response to currencies' do
-      calc.should respond_to :currencies
+      expect(calc).to respond_to :currencies
     end
   end
 
   context 'feeds' do
     it 'should not be nil' do
       calc = Momm::Calculator.new
-      calc.feed.should_not be_nil
+      expect(calc.feed).not_to be_nil
     end
   end
 end

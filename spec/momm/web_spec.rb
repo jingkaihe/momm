@@ -19,10 +19,12 @@ describe Momm::Web do
 
   describe 'GET /query' do
     it 'should response' do
-      get '/query', money: 12, from: "GBP", to: "USD", date: "2014-3-10"
+      get '/query', money: 12, from: "GBP", to: "USD", date: Date.today
 
       expect(last_response).to be_ok
-      expect(last_response.body).to eq("19.98")
+      expect{
+        last_response.body.to_i
+      }.not_to raise_error
     end
   end
 

@@ -1,5 +1,3 @@
-require 'dalli'
-
 module Momm
   class Memcached < Storage
 
@@ -28,5 +26,5 @@ module Momm
       date = Date.parse(date) if date.is_a? String
       client.get("#{date}#{currency}").to_f
     end
-  end
+  end if defined?(::Dalli)
 end

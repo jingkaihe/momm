@@ -60,7 +60,5 @@ module Momm
       end
       "OK"
     end
-
-    NotImplementedError = Class.new(StandardError)
   end
 end

@@ -3,22 +3,24 @@ require 'spec_helper'
 describe Momm::RedisStore do
   context 'default configurations' do
     it 'default options should be correct' do
-      Momm::RedisStore::DEFAULT_OPTIONS.should == {
-        host: "localhost", port: 6379, namespace: "momm"
-      }
+      expect(Momm::RedisStore::DEFAULT_OPTIONS).to eq({
+        host: "localhost",
+        port: 6379,
+        namespace: "momm"
+      })
     end
   end
 
   context '#initialize' do
     it 'can be initialized without params passed in' do
         momm = Momm::RedisStore.new
-        momm.client.should be_a(Redis::Namespace)
+        expect(momm.client).to be_a(Redis::Namespace)
     end
 
     it 'can be initialized' do
       momm = Momm::RedisStore.new host: "localhost",
         port: 6379, namespace: "momm"
-      momm.client.should be_a(Redis::Namespace)
+      expect(momm.client).to be_a(Redis::Namespace)
     end
   end
 
@@ -29,7 +31,7 @@ describe Momm::RedisStore do
       money = rand(20)
 
       calc.set_rate :USD, money
-      calc.get_rate(:USD).should == money
+      expect(calc.get_rate(:USD)).to eq money
 
       Momm.update!
     end
