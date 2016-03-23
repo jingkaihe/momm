@@ -71,12 +71,10 @@ After the gem is installed, momm provide you a command line tool. The storage en
 
   Momm.exchange_rate 'GBP', 'USD' # By default Today
   Momm.exchange_rate 'GBP', 'USD', date: Date.today
-  Momm.exchange_rate_from_gbp_to_usd, date: "2014-3-4"
 
   Momm.exchange 100, 'GBP', 'USD'
   Momm.exchange 100, 'GBP', 'USD', date: Date.today
   Momm.exchange_from_gbp_to_usd 100
-  Momm.exchange_from_gbp_to_usd 100, date: "2014-3-4"
 
   Momm.update! # Fetching the feeds from remote. Only do that if you find any abnormal.
 ```

@@ -122,26 +122,5 @@ module Momm
       update!
       get_rate_origin(from, date)
     end
-
-    # @TODO: Refactoring
-    def method_missing(meth, *args, &block)
-      meth = meth.to_s
-      case
-      when meth.match(/^exchange_rate_from_(\w+)_to_(\w+)/)
-        exchange_rate($1.upcase.to_sym, $2.upcase.to_sym, *args, &block)
-      when meth.match(/^exchange_from_(\w+)_to_(\w+)/)
-        money, *res = args
-        exchange(money, $1.upcase.to_sym, $2.upcase.to_sym, *res, &block)
-      else
-        super
-      end
-    end
-
-    def respond_to?(meth, include_private = false)
-      meth = meth.to_s
-      meth.match(/^exchange_rate_from_(\w+)_to_(\w+)/) ||
-        meth.match(/^exchange_from_(\w+)_to_(\w+)/) ||
-          super
-    end
   end
 end

@@ -26,8 +26,7 @@ module Momm
 
     # delegate the exchange, :currencies, exchange_rate,
     # as well as meta programmed methods to module level
-    delegate [:currencies, :exchange, :exchange_rate,
-        :method_missing, :respond_to?, :update! ] => :calculator
+    delegate [:currencies, :exchange, :exchange_rate, :update! ] => :calculator
 
     delegate [:store, :source ] => :bridge
 

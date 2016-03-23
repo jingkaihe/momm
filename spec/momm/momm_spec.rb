@@ -10,14 +10,6 @@ describe Momm do
       expect(Momm).to respond_to :exchange
     end
 
-    it "should respond to exchange_from_gbp_to_usd" do
-      expect(Momm).to respond_to :exchange_from_gbp_to_usd
-    end
-
-    it "should respond to exchange_rate_from_gbp_to_usd" do
-      expect(Momm).to respond_to :exchange_rate_from_gbp_to_usd
-    end
-
     it "should respond to update!" do
       expect(Momm).to respond_to :update!
     end
