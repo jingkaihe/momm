@@ -15015,7 +15015,7 @@ jQuery(function(){
       money: $('.momm-money').val(),
       date: $('.momm-date').val()
     }, function(result){
-      $('.momm-exchange').text(result);
+      $('.momm-exchange').text(result.rate);
     });
   };
 

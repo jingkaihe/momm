@@ -1,11 +1,12 @@
-require 'httparty'
-require 'open-uri'
+require "net/http"
+require "uri"
+require "rexml/document"
 
 module Momm
   module Feeds
     class ECB
 
-      FETCHING_URL = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml".freeze
+      FETCHING_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml".freeze
 
       #Hard coded for good
       CURRENCIES = %w{USD JPY BGN CZK DKK GBP HUF LTL PLN RON SEK CHF
@@ -24,39 +25,54 @@ module Momm
         end
       end
 
+      ConnectionError = Class.new(StandardError)
       # should be a singleton class
       private_class_method :new
 
-      # Parse the XML data by Nokogiri
-      # == Returns
-      # Nokogiri Object
+      # Request the feed and get the response
       #
-      def parsed_content
-        # @TODO Refactoring Bad patterns
-        HTTParty.get(fetching_url, format: :xml)['Envelope']['Cube']['Cube']
+      # == Returns
+      # A Net::HTTPResponse response
+      #
+      def response
+        @response ||= Net::HTTP.start(fetching_url.host, fetching_url.port,
+          :use_ssl => fetching_url.scheme == "https",
+          :open_timeout => 5,
+          :read_timeout => 5) do |http|
+
+          http.request Net::HTTP::Get.new(fetching_url)
+        end
       end
 
-      # convert the nokogiri parsed data to array
+      # Response body in xml format
+      def xml
+        @xml ||= begin
+          raise ConnectionError unless response.is_a? Net::HTTPOK
+          REXML::Document.new response.body
+        end
+      end
+
+      # turn the xml data to array of currencies
       #
       # == Returns
       # looks like [{date: Date.now, currency: :CNY, rate: 1.23} ...]
       #
       def currency_rates
-        parsed_content.map do |content|
-          date = Date.parse(content["time"])
-          cubes = content["Cube"]
-          cubes.map do |cube|
+        daily_currencies = xml.elements["//Cube"].select{ |c| c.is_a? REXML::Element }
+        daily_currencies.map do |daily_currency|
+          date = Date.parse daily_currency.attributes["time"]
+          daily_currency.map do |cube|
             {
               date: date,
-              currency: cube["currency"].to_sym,
-              rate: cube["rate"].to_f
+              currency: cube.attributes["currency"].to_sym,
+              rate: cube.attributes["rate"].to_f
             }
           end
         end.flatten
       end
 
       def fetching_url
-        FETCHING_URL
+        URI(FETCHING_URL)
       end
 
       def currencies

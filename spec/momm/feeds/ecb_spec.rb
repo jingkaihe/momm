@@ -23,7 +23,7 @@ describe Momm::Feeds::ECB do
 
   describe "#fetching_url" do
     it 'should not be nil' do
-      expect(Momm::Feeds::ECB.instance.fetching_url).to be_a String
+      expect(Momm::Feeds::ECB.instance.fetching_url).to be_a URI::HTTPS
     end
   end
 

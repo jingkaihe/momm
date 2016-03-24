@@ -1,7 +1,7 @@
-require 'sinatra/base'
-require 'momm'
-require 'erb'
-
+require "sinatra/base"
+require "momm"
+require "erb"
+require "json"
 module Momm
   class Web < ::Sinatra::Base
 
@@ -34,11 +34,13 @@ module Momm
       to = (params[:to] || "GBP").to_sym
       date = params[:date] || Date.today
 
-      if money && from && to && date
-        Momm.exchange(money, from, to, date: date).to_json
+      rate = if money && from && to && date
+        Momm.exchange(money, from, to, date: date)
       else
         "N/A"
       end
+
+      {rate: rate}.to_json
     end
 
     # GET '/currencies'
