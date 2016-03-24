@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jaxi/momm.svg?branch=master)](https://travis-ci.org/jaxi/momm)
 
-Money on My Mind - An awesome gem for currency exchange.
+Money on My Mind - A pure Ruby gem for currency exchange.
 
 ```
                    __  __                                        __  __
