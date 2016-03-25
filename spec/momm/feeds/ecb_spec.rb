@@ -17,13 +17,13 @@ describe Momm::Feeds::ECB do
 
   describe ".currencies" do
     it 'should not be nil' do
-      expect(Momm::Feeds::ECB.instance.currencies).to be_a(Array)
+      expect(Momm::Feeds::ECB::CURRENCIES).to be_a(Array)
     end
   end
 
   describe "#fetching_url" do
     it 'should not be nil' do
-      expect(Momm::Feeds::ECB.instance.fetching_url).to be_a URI::HTTPS
+      expect(Momm::Feeds::ECB::FEED_URL).to be_a URI::HTTPS
     end
   end
 

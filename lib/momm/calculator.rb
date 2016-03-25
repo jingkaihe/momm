@@ -19,13 +19,16 @@ module Momm
     # delegate the client and set_rate method from storage
     delegate [:client, :set_rate] => :storage
 
-    # delegate the currencies method from feed
-    delegate :currencies => :feed
-
     # delegate methods with different naming for overriding
     def_delegator :storage, :get_rate, :get_rate_origin
     def_delegator :storage, :update, :origin_update
 
+    # The available currencies from the feed's class
+    #
+    # Returns an Array
+    def currencies
+      feed.class::CURRENCIES
+    end
 
     # Update the feeds. In most case, you do not need to call this,
     # because Momm will update the feeds everytime she find something missing ;)

@@ -6,7 +6,7 @@ module Momm
   module Feeds
     class ECB
 
-      FETCHING_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml".freeze
+      FEED_URL = URI("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml").freeze
 
       #Hard coded for good
       CURRENCIES = %w{USD JPY BGN CZK DKK GBP HUF LTL PLN RON SEK CHF
@@ -35,12 +35,12 @@ module Momm
       # A Net::HTTPResponse response
       #
       def response
-        @response ||= Net::HTTP.start(fetching_url.host, fetching_url.port,
-          :use_ssl => fetching_url.scheme == "https",
+        @response ||= Net::HTTP.start(FEED_URL.host, FEED_URL.port,
+          :use_ssl => FEED_URL.scheme == "https",
           :open_timeout => 5,
           :read_timeout => 5) do |http|
 
-          http.request Net::HTTP::Get.new(fetching_url)
+          http.request Net::HTTP::Get.new(FEED_URL)
         end
       end
 
@@ -69,14 +69,6 @@ module Momm
             }
           end
         end.flatten
-      end
-
-      def fetching_url
-        URI(FETCHING_URL)
-      end
-
-      def currencies
-        CURRENCIES
       end
     end
   end
