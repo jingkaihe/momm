@@ -9,4 +9,4 @@ services:
   - redis-server
   - memcached
 
-script: bundle exec rake rspec
+script: bundle exec rspec
