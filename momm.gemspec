@@ -18,10 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "dalli", "2.7.6"
+  spec.add_development_dependency "dalli", "~> 3.2", ">= 3.2.3"
   spec.add_development_dependency "redis-namespace", "1.5.2"
   spec.add_development_dependency "rack-test", "0.6.3"
-  spec.add_development_dependency "rake", "10.5.0"
-  spec.add_development_dependency "sinatra", "1.4.7"
+  spec.add_development_dependency "rake", "~> 13.0", ">= 12.3.3"
+  spec.add_development_dependency "sinatra", "~> 4.2", ">= 4.2.0"
   spec.add_development_dependency "rspec", "3.4.0"
 end
