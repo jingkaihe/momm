@@ -8,6 +8,9 @@ module Momm
     set :root, File.expand_path(File.dirname(__FILE__) + "/../../vendor")
     set :public_folder, Proc.new { "#{root}/assets" }
     set :views, Proc.new { "#{root}/views" }
+    
+    # Disable host authorization for Sinatra 4.x compatibility
+    set :host_authorization, { permitted_hosts: [] }
 
     # GET '/'
     # == Returns
